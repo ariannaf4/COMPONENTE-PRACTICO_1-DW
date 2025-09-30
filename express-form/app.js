@@ -14,7 +14,11 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // La configuración de la base de datos se maneja en database.js
 
 // ===================== CRUD =====================
-
+// POST: es el que envía datos al servidor
+// GET: es el que obtiene datos del servidor
+// PUT: es el que actualiza datos en el servidor
+// DELETE: es el que elimina datos en el servidor
+// PATCH: es el que aplica modificaciones parciales a un recurso
 // CREATE - Agregar usuario
 app.post('/api/usuarios', (req, res) => {
   const userData = req.body
@@ -32,7 +36,7 @@ app.post('/api/usuarios', (req, res) => {
 
 // READ - Todos los usuarios
 app.get('/api/usuarios', (req, res) => {
-  db.getAllUsers((err, users) => {
+  db.getAllUsers((err, users) => { // Funcion que esta en database para obtener todos los usuarios
     if (err) {
       return res.status(500).json({ error: err.message })
     }
@@ -41,10 +45,11 @@ app.get('/api/usuarios', (req, res) => {
 })
 
 // READ - Usuario por ID
+//id: placeholder: solo números 
 app.get('/api/usuarios/:id', (req, res) => {
   const { id } = req.params
   
-  db.getUserById(id, (err, user) => {
+  db.getUserById(id, (err, user) => { // funcion para buscar un usuario por id
     if (err) {
       return res.status(500).json({ error: err.message })
     }

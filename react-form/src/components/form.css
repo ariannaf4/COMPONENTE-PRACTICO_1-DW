@@ -146,3 +146,16 @@ button:hover {
   color: white;
   margin-left: 10px;
 }
+
+/* Estilos para validaciones */
+.input-error {
+  border-color: #dc3545 !important;
+  background-color: #fff5f5;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 2px;
+  display: block;
+}

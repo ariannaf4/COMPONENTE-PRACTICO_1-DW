@@ -11,12 +11,12 @@
       
       <div class="form-group">
         <label>Nombres:</label>
-        <input type="text" v-model="formData.nombres" placeholder="Nombres completos" required />
+        <input type="text" v-model="formData.nombres" placeholder="Nombres completos" @input="validateNombres" required />
       </div>
       
       <div class="form-group">
         <label>Apellidos:</label>
-        <input type="text" v-model="formData.apellidos" placeholder="Apellidos completos" required />
+        <input type="text" v-model="formData.apellidos" placeholder="Apellidos completos" @input="validateApellidos" required />
       </div>
       
       <div class="form-group">
@@ -80,6 +80,20 @@ export default {
   methods: {
     validateDNI() {
       this.formData.dni = this.formData.dni.replace(/\D/g, '').slice(0, 10)
+    },
+    validateNombres() {
+      // Solo permitir letras, espacios y acentos
+      const soloLetras = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/
+      if (!soloLetras.test(this.formData.nombres)) {
+        this.formData.nombres = this.formData.nombres.slice(0, -1)
+      }
+    },
+    validateApellidos() {
+      // Solo permitir letras, espacios y acentos
+      const soloLetras = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/
+      if (!soloLetras.test(this.formData.apellidos)) {
+        this.formData.apellidos = this.formData.apellidos.slice(0, -1)
+      }
     },
     resetForm() {
       this.formData = { dni: '', nombres: '', apellidos: '', fechaNacimiento: '', genero: '', ciudad: '' }

@@ -1,12 +1,20 @@
 // Componente para inputs básicos con validaciones simples
 const Input = ({ type, name, value, onChange, label, maxLength, placeholder, required = true }) => {
   
-  // Validación simple para DNI
-  const validateDNI = (value) => {
+  // Validaciones simples por tipo de campo
+  const validateInput = (value) => {
     if (name === 'dni') {
-      const numericValue = value.replace(/\D/g, ''); // Solo números
-      return numericValue.slice(0, 10); // Máximo 8 dígitos
+      // DNI: Solo números, máximo 10 dígitos
+      const numericValue = value.replace(/\D/g, '');
+      return numericValue.slice(0, 10);
     }
+    
+    if (name === 'nombres' || name === 'apellidos') {
+      // Nombres y apellidos: Solo letras, espacios y acentos
+      const soloLetras = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+      return soloLetras.test(value) ? value : value.slice(0, -1);
+    }
+    
     return value;
   };
 
@@ -15,9 +23,7 @@ const Input = ({ type, name, value, onChange, label, maxLength, placeholder, req
     let newValue = e.target.value;
     
     // Aplicar validación específica
-    if (name === 'dni') {
-      newValue = validateDNI(newValue);
-    }
+    newValue = validateInput(newValue);
     
     onChange({ target: { name, value: newValue } });
   };
